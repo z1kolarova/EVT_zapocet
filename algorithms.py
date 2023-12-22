@@ -5,7 +5,7 @@ import random
 
 import numpy as np
 
-import functions as fc
+# import functions as fc
 import dataexports as de
 
 
@@ -114,12 +114,12 @@ def pso(cf_nbr, cf_dictionary, dimension, population_size, bounds, max_cf_evals,
 
     while (cf_eval_counter + population_size) < max_cf_evals:
         for i in range(population_size):
+            random.seed()
             r1 = random.uniform(0, 1)
             r2 = random.uniform(0, 1)
-
-            vt1 = w * inertias[i] + (c1 * r1 * (pbests[i][0] - population[i]) + (c2 * r2 * (gbest - population[i])))
+            vt1 = w * inertias[i] + (c1 * r1 * (pbests[i] - population[i]) + (c2 * r2 * (gbest - population[i])))
             inertias[i] = vt1
-            population[i] = population[i] + vt1
+            population[i] += vt1
 
             for j in range(dimension):
                 population[i][j] = ensure_value_within_bounds_reflection(population[i][j], bounds)
@@ -195,7 +195,7 @@ def soma_all_to_all(cf_nbr, cf_dictionary, dimension, population_size, bounds, m
     post_migration_positions = population.copy()
     post_migration_fitnesses = fitnesses.copy()
 
-    for m in range(int(migrations_total)):
+    for m in range(max(1, int(migrations_total))):
 
         for i in range(population_size):
             for g in range(population_size):

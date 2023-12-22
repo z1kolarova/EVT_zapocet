@@ -1,6 +1,3 @@
-from pathlib import Path
-
-import algorithms as al
 import costfunctions as cf
 import dataexports as de
 
@@ -48,33 +45,6 @@ function_dictionary = {
     25: ("'Vlnité skluzavky' function", cf.f25_vlnite_skluzavky),
 }
 
-# """while category_count < 25:
-#     catalogue_filename = f"item_catalogue_c{category_count}.csv"
-#     dirname = "./output/"
-#     full_catalogue_path = f"{dirname}{catalogue_filename}"
-#     de.directory_preparation(dirname)
-#
-#     catalogue_exists = Path(full_catalogue_path).is_file()
-#     #if not catalogue_exists:
-#
-#     viability_check = 301
-#     while viability_check > 300:
-#         viability_check = 0
-#         de.generate_item_catalogue(dirname, catalogue_filename, category_count, items_per_category)
-#         items = de.load_from_item_catalogue(full_catalogue_path)
-#         for i in range(category_count):
-#             start_index = i * items_per_category
-#             smallest_weight_in_category = items[start_index].weight
-#             for j in range(items_per_category - 1):
-#                 current_weight = items[start_index + 1 + j].weight
-#                 if current_weight < smallest_weight_in_category:
-#                     smallest_weight_in_category = current_weight
-#             viability_check += smallest_weight_in_category
-#
-#     values_and_weights_tuple_list = de.convert_item_list_to_values_and_weights_tuple_list(items)
-#     al.bruteforce(values_and_weights_tuple_list, backpack_capacity, category_count, items_per_category)
-#     category_count += 1"""
-
 dimension = 30  # 2, 10, 30
 population_size = 10 if dimension == 2 else 20 if dimension == 10 else 50
 
@@ -110,21 +80,110 @@ population_size = 10 if dimension == 2 else 20 if dimension == 10 else 50
 #                                            final_results, averages,
 #                                            dirname, filenamebase, titlebase, "")
 
-# PSO
-dirname = "./output/PSO/"
-for i in range(19, 25):  # use 0 as first and 25 as last parameter to run all functions
-    functionNbr = i + 1
-    filenamebase = f"PSO_timeline_d{dimension}_f{functionNbr}"
-    titlebase = f"PSO on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+short_times = [range(0, 13), range(14, 18), range(19, 25)]
+long_times = [range(13, 14), range(18, 19)]
 
-    convergences = list()
-    final_results = list()
-    averages = list()
+# dirname = "./output/SOMA_all-to-one/"
+# for st in short_times:
+#     for i in st:
+#         functionNbr = i + 1
+#         filenamebase = f"SOMA_all-to-one_timeline_d{dimension}_f{functionNbr}"
+#         titlebase = f"SOMA all-to-one on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+# 
+#         convergences = list()
+#         final_results = list()
+#         averages = list()
+# 
+#         de.process_multiple_runs_soma_all_to_one(runs, functionNbr, function_dictionary, dimension, population_size,
+#                                                  bounds, 2000 * dimension, path_length_soma, step_size_soma, prt_soma,
+#                                                  convergences,
+#                                                  final_results, averages,
+#                                                  dirname, filenamebase, titlebase, "")
 
-    de.process_multiple_runs_pso(runs, functionNbr, function_dictionary, dimension, population_size,
-                                 bounds, 2000 * dimension, c1_pso, c2_pso, w_pso, convergences,
-                                 final_results, averages,
-                                 dirname, filenamebase, titlebase, "")
+# # SOMA all-to-all
+# dirname = "./output/SOMA_all-to-all/"
+# for st in short_times:
+#     for i in st:
+#         functionNbr = i + 1
+#         filenamebase = f"SOMA_all-to-all_timeline_d{dimension}_f{functionNbr}"
+#         titlebase = f"SOMA all-to-all on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+#
+#         convergences = list()
+#         final_results = list()
+#         averages = list()
+#
+#         de.process_multiple_runs_soma_all_to_all(runs, functionNbr, function_dictionary, dimension, population_size,
+#                                                  bounds, 2000 * dimension, path_length_soma, step_size_soma, prt_soma,
+#                                                  convergences,
+#                                                  final_results, averages,
+#                                                  dirname, filenamebase, titlebase, "")
+
+# # PSO
+# dirname = "./output/PSO/"
+# for r in short_times:
+#     for i in r:  # use 0 as first and 25 as last parameter to run all functions
+#         functionNbr = i + 1
+#         filenamebase = f"PSO_timeline_d{dimension}_f{functionNbr}"
+#         titlebase = f"PSO on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+#
+#         convergences = list()
+#         final_results = list()
+#         averages = list()
+#
+#         de.process_multiple_runs_pso(runs, functionNbr, function_dictionary, dimension, population_size,
+#                                      bounds, 2000 * dimension, c1_pso, c2_pso, w_pso, convergences,
+#                                      final_results, averages,
+#                                      dirname, filenamebase, titlebase, "")
+#
+# for r in long_times:
+#     for i in r:  # use 0 as first and 25 as last parameter to run all functions
+#         functionNbr = i + 1
+#         filenamebase = f"PSO_timeline_d{dimension}_f{functionNbr}"
+#         titlebase = f"PSO on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+#
+#         convergences = list()
+#         final_results = list()
+#         averages = list()
+#
+#         de.process_multiple_runs_pso(runs, functionNbr, function_dictionary, dimension, population_size,
+#                                      bounds, 2000 * dimension, c1_pso, c2_pso, w_pso, convergences,
+#                                      final_results, averages,
+#                                      dirname, filenamebase, titlebase, "")
+
+# dirname = "./output/SOMA_all-to-one/"
+# for lt in long_times:
+#     for i in lt:
+#         functionNbr = i + 1
+#         filenamebase = f"SOMA_all-to-one_timeline_d{dimension}_f{functionNbr}"
+#         titlebase = f"SOMA all-to-one on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+#
+#         convergences = list()
+#         final_results = list()
+#         averages = list()
+#
+#         de.process_multiple_runs_soma_all_to_one(runs, functionNbr, function_dictionary, dimension, population_size,
+#                                                  bounds, 2000 * dimension, path_length_soma, step_size_soma, prt_soma,
+#                                                  convergences,
+#                                                  final_results, averages,
+#                                                  dirname, filenamebase, titlebase, "")
+
+# # SOMA all-to-all
+# dirname = "./output/SOMA_all-to-all/"
+# for lt in long_times:
+#     for i in lt:
+#         functionNbr = i + 1
+#         filenamebase = f"SOMA_all-to-all_timeline_d{dimension}_f{functionNbr}"
+#         titlebase = f"SOMA all-to-all on {function_dictionary[functionNbr][0]} with dimension {dimension}"
+#
+#         convergences = list()
+#         final_results = list()
+#         averages = list()
+#
+#         de.process_multiple_runs_soma_all_to_all(runs, functionNbr, function_dictionary, dimension, population_size,
+#                                                  bounds, 2000 * dimension, path_length_soma, step_size_soma, prt_soma,
+#                                                  convergences,
+#                                                  final_results, averages,
+#                                                  dirname, filenamebase, titlebase, "")
 
 # SOMA all-to-one
 # dirname = "./output/SOMA_all-to-one/"
@@ -160,6 +219,7 @@ for i in range(19, 25):  # use 0 as first and 25 as last parameter to run all fu
 #                                              final_results, averages,
 #                                              dirname, filenamebase, titlebase, "")
 
-# algorithms = ["DE_rand_1_bin", "DE_best_1_bin", "PSO", "SOMA_all-to-one", "SOMA_all-to-all"]
-# for algorithm in algorithms:
-#     de.create_statistics_file(algorithm, 10)
+# # algorithms = ["DE_rand_1_bin", "DE_best_1_bin", "PSO", "SOMA_all-to-one", "SOMA_all-to-all"]
+algorithms = ["PSO"]
+for algorithm in algorithms:
+    de.create_statistics_file(algorithm, 30)
