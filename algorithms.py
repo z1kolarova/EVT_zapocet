@@ -164,6 +164,8 @@ def soma_all_to_one(cf_nbr, cf_dictionary, dimension, population_size, bounds, m
                 prts = np.random.rand(dimension)
                 prt_vector = np.array(prts < prt, dtype=int)
                 step_individual = population[i] + movement * t * prt_vector
+                for j in range(dimension):
+                    step_individual[j] = ensure_value_within_bounds_reflection(step_individual[j], bounds)
                 step_fitness = cf_dictionary[cf_nbr][1](step_individual)
 
                 if step_fitness < fitnesses[i]:
@@ -205,6 +207,8 @@ def soma_all_to_all(cf_nbr, cf_dictionary, dimension, population_size, bounds, m
                     prts = np.random.rand(dimension)
                     prt_vector = np.array(prts < prt, dtype=int)
                     step_individual = population[i] + movement * t * prt_vector
+                    for j in range(dimension):
+                        step_individual[j] = ensure_value_within_bounds_reflection(step_individual[j], bounds)
                     step_fitness = cf_dictionary[cf_nbr][1](step_individual)
 
                     if step_fitness < post_migration_fitnesses[i]:
